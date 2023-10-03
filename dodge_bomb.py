@@ -13,6 +13,7 @@ delta = {
     }
 
 
+
 def check_bound(obj_rct: pg.Rect):
     yoko, tate = True,True
     if obj_rct.left < 0 or WIDTH < obj_rct.right:
@@ -25,12 +26,27 @@ def main():
     screen = pg.display.set_mode((WIDTH, HEIGHT))
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
-    kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    #kk_img = pg.transform.rotozoom(kk_img, 0, 1.0)
+    kk_img_r =pg.transform.flip(kk_img, True, False)
+    kk_delc ={
+    
+    (0,0) : pg.transform.rotozoom(kk_img, 0, 2.0),
+    (0,-5): pg.transform.rotozoom(kk_img_r, 90, 2.0),
+    (+5,-5): pg.transform.rotozoom(kk_img_r, 45, 2.0),
+    (+5,0):pg.transform.rotozoom(kk_img_r, 0, 2.0),
+    (+5,5): pg.transform.rotozoom(kk_img_r, -45, 2.0),
+    (0,+5): pg.transform.rotozoom(kk_img_r, -90, 2.0),
+    (-5,5):  pg.transform.rotozoom(kk_img, 45, 2.0),
+    (-5,0):  pg.transform.rotozoom(kk_img, 0, 2.0),
+    (-5,-5): pg.transform.rotozoom(kk_img, -45, 2.0)
+}
+    kk_img =kk_delc[(0,0)]
     kk_rct =kk_img.get_rect()
     kk_rct.center =(900,400)
     bd_img = pg.Surface((20, 20))
     bd_img.set_colorkey((0, 0, 0))
     vx,vy =+5,+5
+    
     pg.draw.circle(bd_img, (255, 0, 0), (10, 10), 10)
     bd_rct = bd_img.get_rect() #surfaceからrectを抽出
     x,y = random.randint(0,WIDTH),random.randint(0,HEIGHT)# rectにランダムな座標を設定する
@@ -58,6 +74,7 @@ def main():
         kk_rct.move_ip(sum_mv[0],sum_mv[1])
         if check_bound(kk_rct) != (True,True):
             kk_rct.move_ip(-sum_mv[0],-sum_mv[1])
+        kk_img = kk_delc[tuple(sum_mv)]
         screen.blit(kk_img,kk_rct)
         bd_rct.move_ip(vx,vy)
         yoko,tate = check_bound(bd_rct)
