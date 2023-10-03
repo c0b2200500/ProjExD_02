@@ -14,7 +14,7 @@ def main():
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
     bd_img = pg.Surface((20, 20))
     bd_img.set_colorkey((0, 0, 0))
-
+    vx,vy =+5,+5
     pg.draw.circle(bd_img, (255, 0, 0), (10, 10), 10)
     bd_rct = bd_img.get_rect() #surfaceからrectを抽出
     x,y = random.randint(0,WIDTH),random.randint(0,HEIGHT)# rectにランダムな座標を設定する
@@ -30,10 +30,11 @@ def main():
 
         screen.blit(bg_img, [0, 0])
         screen.blit(kk_img, [900, 400])
-        screen.blit(bd_img,bd_rct) #
+        bd_rct.move_ip(vx,vy)
+        screen.blit(bd_img,bd_rct) #rectを試しにblit
         pg.display.update()
         tmr += 1
-        clock.tick(10)
+        clock.tick(50)
 
 
 if __name__ == "__main__":
