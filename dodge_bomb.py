@@ -21,6 +21,7 @@ def check_bound(obj_rct: pg.Rect):
     if obj_rct.top < 0 or HEIGHT < obj_rct.bottom:
         tate = False
     return yoko,tate
+
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
